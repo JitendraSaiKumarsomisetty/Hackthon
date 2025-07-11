@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Mic, MicOff, Volume2, VolumeX, MessageCircle, X, Send, Bot, User, Globe, Navigation } from 'lucide-react';
-import { useSpeechSynthesis, useSpeechRecognition } from 'react-speech-kit';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -34,29 +33,55 @@ const VoiceAssistant: React.FC<VoiceAssistantProps> = ({ onNavigate, onFilterUpd
   const [inputText, setInputText] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   // Initialize Gemini AI (you'll need to add your API key)
   const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY || 'your-gemini-api-key');
   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-  const { speak, cancel, speaking } = useSpeechSynthesis();
-  const { listen, listening, stop } = useSpeechRecognition({
-    onResult: (result: string) => {
-      setInputText(result);
-      handleVoiceInput(result);
-    },
-    onError: (error: any) => {
-      console.error('Speech recognition error:', error);
+  // Initialize speech recognition
+  useEffect(() => {
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.continuous = false;
+      recognitionRef.current.interimResults = false;
+      
+      recognitionRef.current.onresult = (event) => {
+        const result = event.results[0][0].transcript;
+        setInputText(result);
+        handleVoiceInput(result);
+        setIsListening(false);
+      };
+      
+      recognitionRef.current.onerror = (error) => {
+        console.error('Speech recognition error:', error);
+        setIsListening(false);
+      };
+      
+      recognitionRef.current.onend = () => {
+        setIsListening(false);
+      };
     }
-  });
+  }, []);
 
-  useEffect(() => {
-    setIsSpeaking(speaking);
-  }, [speaking]);
-
-  useEffect(() => {
-    setIsListening(listening);
-  }, [listening]);
+  // Speech synthesis functions
+  const speak = (text: string, voice?: SpeechSynthesisVoice) => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      if (voice) utterance.voice = voice;
+      utterance.onstart = () => setIsSpeaking(true);
+      utterance.onend = () => setIsSpeaking(false);
+      speechSynthesis.speak(utterance);
+    }
+  };
+  
+  const cancelSpeech = () => {
+    if ('speechSynthesis' in window) {
+      speechSynthesis.cancel();
+      setIsSpeaking(false);
+    }
+  };
 
   useEffect(() => {
     scrollToBottom();
@@ -192,27 +217,27 @@ const VoiceAssistant: React.FC<VoiceAssistantProps> = ({ onNavigate, onFilterUpd
     // Speak the response
     if (detectedLang !== 'en') {
       // For non-English, use appropriate voice
-      speak({ 
-        text: botMessage.text, 
-        voice: getVoiceForLanguage(detectedLang)
-      });
+      speak(botMessage.text, getVoiceForLanguage(detectedLang));
     } else {
-      speak({ text: botMessage.text });
+      speak(botMessage.text);
     }
   };
 
   const getVoiceForLanguage = (lang: string) => {
-    const voices = speechSynthesis.getVoices();
-    switch (lang) {
-      case 'hi':
-        return voices.find(voice => voice.lang.includes('hi')) || voices[0];
-      case 'te':
-        return voices.find(voice => voice.lang.includes('te')) || voices[0];
-      case 'ta':
-        return voices.find(voice => voice.lang.includes('ta')) || voices[0];
-      default:
-        return voices.find(voice => voice.lang.includes('en')) || voices[0];
+    if ('speechSynthesis' in window) {
+      const voices = speechSynthesis.getVoices();
+      switch (lang) {
+        case 'hi':
+          return voices.find(voice => voice.lang.includes('hi')) || voices[0];
+        case 'te':
+          return voices.find(voice => voice.lang.includes('te')) || voices[0];
+        case 'ta':
+          return voices.find(voice => voice.lang.includes('ta')) || voices[0];
+        default:
+          return voices.find(voice => voice.lang.includes('en')) || voices[0];
+      }
     }
+    return undefined;
   };
 
   const handleNavigation = (page: string, originalText: string) => {
@@ -265,19 +290,21 @@ const VoiceAssistant: React.FC<VoiceAssistantProps> = ({ onNavigate, onFilterUpd
   };
 
   const startListening = () => {
-    if (listening) {
-      stop();
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
     } else {
-      listen({ 
-        lang: language === 'hi' ? 'hi-IN' : language === 'te' ? 'te-IN' : 'en-US',
-        interimResults: false 
-      });
+      if (recognitionRef.current) {
+        recognitionRef.current.lang = language === 'hi' ? 'hi-IN' : language === 'te' ? 'te-IN' : 'en-US';
+        recognitionRef.current.start();
+        setIsListening(true);
+      }
     }
   };
 
   const toggleSpeaking = () => {
-    if (speaking) {
-      cancel();
+    if (isSpeaking) {
+      cancelSpeech();
     }
   };
 
