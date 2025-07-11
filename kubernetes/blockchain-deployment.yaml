@@ -1,0 +1,136 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: blockchain-pvc
+  namespace: villagestay
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: fast-ssd
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blockchain-deployment
+  namespace: villagestay
+  labels:
+    app: blockchain
+    tier: blockchain
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blockchain
+      tier: blockchain
+  template:
+    metadata:
+      labels:
+        app: blockchain
+        tier: blockchain
+    spec:
+      containers:
+      - name: geth
+        image: ethereum/client-go:latest
+        ports:
+        - containerPort: 8545
+        - containerPort: 8546
+        - containerPort: 30303
+        command:
+        - geth
+        - --networkid=1337
+        - --datadir=/data
+        - --http
+        - --http.addr=0.0.0.0
+        - --http.port=8545
+        - --http.corsdomain=*
+        - --http.api=eth,net,web3,personal,miner,admin
+        - --ws
+        - --ws.addr=0.0.0.0
+        - --ws.port=8546
+        - --ws.origins=*
+        - --ws.api=eth,net,web3,personal,miner,admin
+        - --allow-insecure-unlock
+        - --rpc.allow-unprotected-txs
+        - --mine
+        - --miner.threads=1
+        - --miner.etherbase=0x0000000000000000000000000000000000000000
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        volumeMounts:
+        - name: blockchain-storage
+          mountPath: /data
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8545
+          initialDelaySeconds: 60
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8545
+          initialDelaySeconds: 30
+          periodSeconds: 10
+      volumes:
+      - name: blockchain-storage
+        persistentVolumeClaim:
+          claimName: blockchain-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blockchain-service
+  namespace: villagestay
+  labels:
+    app: blockchain
+spec:
+  selector:
+    app: blockchain
+    tier: blockchain
+  ports:
+  - name: rpc
+    protocol: TCP
+    port: 8545
+    targetPort: 8545
+  - name: ws
+    protocol: TCP
+    port: 8546
+    targetPort: 8546
+  - name: p2p
+    protocol: TCP
+    port: 30303
+    targetPort: 30303
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: blockchain-ingress
+  namespace: villagestay
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - blockchain.villagestay.com
+    secretName: blockchain-tls-secret
+  rules:
+  - host: blockchain.villagestay.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: blockchain-service
+            port:
+              number: 8545
