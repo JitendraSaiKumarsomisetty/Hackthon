@@ -297,3 +297,167 @@ export const getAITagRecommendations = (community: Community) => {
   
   return recommendations;
 };
+
+// Add new communities
+communities.push(
+  {
+    id: '7',
+    name: 'Kodaikanal Organic Farming Community',
+    village: 'Kodaikanal',
+    state: 'Tamil Nadu',
+    coordinates: [10.2381, 77.4892],
+    population: 1500,
+    households: 280,
+    primaryOccupation: ['Organic Farming', 'Eco-Tourism', 'Sustainable Agriculture'],
+    monthlyIncome: 125000,
+    totalEarnings: 1500000,
+    performance: {
+      rating: 4.6,
+      sustainabilityScore: 96,
+      culturalPreservation: 82,
+      touristSatisfaction: 89
+    },
+    aiTags: {
+      ecoFriendly: 98,
+      culturalRichness: 78,
+      adventureLevel: 65,
+      familyFriendly: 92,
+      soloTravelerSafe: 88,
+      accessibility: 75,
+      digitalConnectivity: 65,
+      organicFarming: 99,
+      traditionalCrafts: 75,
+      wildlifeConservation: 85
+    },
+    facilities: ['Organic Certification Center', 'Permaculture Training', 'Solar Power Grid', 'Rainwater Harvesting'],
+    challenges: ['Market Access for Organic Products', 'Climate Change Adaptation'],
+    achievements: ['100% Organic Village Certification', 'Zero Pesticide Community', 'Carbon Negative Farming'],
+    weatherStation: 'Kodaikanal Hill Station',
+    bestVisitMonths: ['October', 'November', 'December', 'January', 'February', 'March', 'April'],
+    languages: ['Tamil', 'English', 'Hindi'],
+    festivals: [
+      { name: 'Organic Harvest Festival', month: 'January', description: 'Celebrating chemical-free farming with organic food fair' },
+      { name: 'Earth Day Celebration', month: 'April', description: 'Community-wide environmental awareness and tree plantation' }
+    ]
+  },
+  {
+    id: '8',
+    name: 'Gokarna Coastal Conservation Community',
+    village: 'Gokarna',
+    state: 'Karnataka',
+    coordinates: [14.5492, 74.3200],
+    population: 2200,
+    households: 420,
+    primaryOccupation: ['Sustainable Fishing', 'Beach Conservation', 'Eco-Tourism'],
+    monthlyIncome: 168000,
+    totalEarnings: 2016000,
+    performance: {
+      rating: 4.7,
+      sustainabilityScore: 91,
+      culturalPreservation: 87,
+      touristSatisfaction: 93
+    },
+    aiTags: {
+      ecoFriendly: 94,
+      culturalRichness: 85,
+      adventureLevel: 88,
+      familyFriendly: 89,
+      soloTravelerSafe: 91,
+      accessibility: 80,
+      digitalConnectivity: 70,
+      organicFarming: 75,
+      traditionalCrafts: 82,
+      wildlifeConservation: 92
+    },
+    facilities: ['Marine Conservation Center', 'Turtle Nesting Protection', 'Waste Management Plant', 'Eco-Beach Resorts'],
+    challenges: ['Plastic Pollution', 'Tourist Overcrowding During Peak Season'],
+    achievements: ['Plastic-Free Beach Initiative', 'Sea Turtle Conservation Success', 'Sustainable Tourism Model'],
+    weatherStation: 'Gokarna Coastal Station',
+    bestVisitMonths: ['October', 'November', 'December', 'January', 'February', 'March'],
+    languages: ['Kannada', 'Hindi', 'English', 'Konkani'],
+    festivals: [
+      { name: 'Beach Clean-up Festival', month: 'November', description: 'Community beach cleaning with cultural programs' },
+      { name: 'Turtle Festival', month: 'February', description: 'Celebrating sea turtle conservation efforts' }
+    ]
+  },
+  {
+    id: '9',
+    name: 'Munnar Tea Garden Sustainable Community',
+    village: 'Munnar',
+    state: 'Kerala',
+    coordinates: [10.0889, 77.0595],
+    population: 3500,
+    households: 650,
+    primaryOccupation: ['Organic Tea Cultivation', 'Spice Farming', 'Eco-Tourism'],
+    monthlyIncome: 245000,
+    totalEarnings: 2940000,
+    performance: {
+      rating: 4.8,
+      sustainabilityScore: 93,
+      culturalPreservation: 84,
+      touristSatisfaction: 95
+    },
+    aiTags: {
+      ecoFriendly: 96,
+      culturalRichness: 81,
+      adventureLevel: 78,
+      familyFriendly: 94,
+      soloTravelerSafe: 89,
+      accessibility: 85,
+      digitalConnectivity: 75,
+      organicFarming: 97,
+      traditionalCrafts: 79,
+      wildlifeConservation: 88
+    },
+    facilities: ['Organic Tea Processing Unit', 'Spice Research Center', 'Biodiversity Park', 'Eco-Lodge Network'],
+    challenges: ['Climate Change Impact on Tea Quality', 'Labor Migration'],
+    achievements: ['Organic Tea Certification', 'Fair Trade Recognition', 'Biodiversity Conservation Award'],
+    weatherStation: 'Munnar Hill Station',
+    bestVisitMonths: ['September', 'October', 'November', 'December', 'January', 'February', 'March', 'April'],
+    languages: ['Malayalam', 'Tamil', 'Hindi', 'English'],
+    festivals: [
+      { name: 'Tea Harvest Festival', month: 'December', description: 'Celebrating tea plucking season with cultural events' },
+      { name: 'Spice Festival', month: 'February', description: 'Showcasing organic spices and traditional recipes' }
+    ]
+  },
+  {
+    id: '10',
+    name: 'Rishikesh Yoga & Wellness Community',
+    village: 'Rishikesh',
+    state: 'Uttarakhand',
+    coordinates: [30.0869, 78.2676],
+    population: 1800,
+    households: 320,
+    primaryOccupation: ['Yoga Teaching', 'Ayurvedic Medicine', 'Spiritual Tourism'],
+    monthlyIncome: 195000,
+    totalEarnings: 2340000,
+    performance: {
+      rating: 4.9,
+      sustainabilityScore: 89,
+      culturalPreservation: 95,
+      touristSatisfaction: 97
+    },
+    aiTags: {
+      ecoFriendly: 87,
+      culturalRichness: 97,
+      adventureLevel: 82,
+      familyFriendly: 85,
+      soloTravelerSafe: 95,
+      accessibility: 88,
+      digitalConnectivity: 80,
+      organicFarming: 85,
+      traditionalCrafts: 88,
+      wildlifeConservation: 78
+    },
+    facilities: ['Yoga Ashrams', 'Ayurvedic Centers', 'Meditation Halls', 'Organic Gardens', 'Ganga Aarti Ghat'],
+    challenges: ['Over-commercialization', 'River Pollution'],
+    achievements: ['International Yoga Capital Recognition', 'Spiritual Tourism Excellence', 'Ganga Conservation Efforts'],
+    weatherStation: 'Rishikesh Himalayan Station',
+    bestVisitMonths: ['October', 'November', 'December', 'January', 'February', 'March', 'April', 'May'],
+    languages: ['Hindi', 'English', 'Sanskrit', 'Garhwali'],
+    festivals: [
+      { name: 'International Yoga Festival', month: 'March', description: 'Global yoga practitioners gathering for spiritual learning' },
+      { name: 'Ganga Aarti Festival', month: 'November', description: 'Sacred river worship with traditional ceremonies' }
+    ]
+  }
+);
