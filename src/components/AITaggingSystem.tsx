@@ -45,7 +45,7 @@ const AITaggingSystem: React.FC<AITaggingSystemProps> = ({ communityId, onTagsUp
         score: community.aiTags.ecoFriendly,
         icon: Leaf,
         color: getScoreColor(community.aiTags.ecoFriendly),
-        description: 'Environmental sustainability and conservation practices'
+        description: 'Environmental sustainability, renewable energy, and conservation practices'
       },
       {
         id: 'cultural_richness',
@@ -53,7 +53,7 @@ const AITaggingSystem: React.FC<AITaggingSystemProps> = ({ communityId, onTagsUp
         score: community.aiTags.culturalRichness,
         icon: Users,
         color: getScoreColor(community.aiTags.culturalRichness),
-        description: 'Rich cultural traditions and heritage preservation'
+        description: 'Rich cultural traditions, festivals, and heritage preservation'
       },
       {
         id: 'adventure_level',
@@ -61,7 +61,7 @@ const AITaggingSystem: React.FC<AITaggingSystemProps> = ({ communityId, onTagsUp
         score: community.aiTags.adventureLevel,
         icon: Mountain,
         color: getScoreColor(community.aiTags.adventureLevel),
-        description: 'Outdoor adventures and thrilling experiences'
+        description: 'Outdoor adventures, trekking, water sports, and thrilling experiences'
       },
       {
         id: 'family_friendly',
@@ -69,7 +69,7 @@ const AITaggingSystem: React.FC<AITaggingSystemProps> = ({ communityId, onTagsUp
         score: community.aiTags.familyFriendly,
         icon: Heart,
         color: getScoreColor(community.aiTags.familyFriendly),
-        description: 'Safe and enjoyable for families with children'
+        description: 'Safe, educational, and enjoyable experiences for families with children'
       },
       {
         id: 'solo_traveler_safe',
@@ -77,7 +77,7 @@ const AITaggingSystem: React.FC<AITaggingSystemProps> = ({ communityId, onTagsUp
         score: community.aiTags.soloTravelerSafe,
         icon: Shield,
         color: getScoreColor(community.aiTags.soloTravelerSafe),
-        description: 'Safe and welcoming for solo travelers'
+        description: 'Safe, welcoming, and supportive environment for solo travelers'
       },
       {
         id: 'digital_connectivity',
@@ -85,7 +85,7 @@ const AITaggingSystem: React.FC<AITaggingSystemProps> = ({ communityId, onTagsUp
         score: community.aiTags.digitalConnectivity,
         icon: Wifi,
         color: getScoreColor(community.aiTags.digitalConnectivity),
-        description: 'Internet and mobile connectivity availability'
+        description: 'Reliable internet, mobile connectivity, and digital infrastructure'
       },
       {
         id: 'organic_farming',
@@ -93,7 +93,7 @@ const AITaggingSystem: React.FC<AITaggingSystemProps> = ({ communityId, onTagsUp
         score: community.aiTags.organicFarming,
         icon: Leaf,
         color: getScoreColor(community.aiTags.organicFarming),
-        description: 'Organic and sustainable farming practices'
+        description: 'Chemical-free organic farming, permaculture, and sustainable agriculture'
       },
       {
         id: 'traditional_crafts',
@@ -101,7 +101,7 @@ const AITaggingSystem: React.FC<AITaggingSystemProps> = ({ communityId, onTagsUp
         score: community.aiTags.traditionalCrafts,
         icon: Tag,
         color: getScoreColor(community.aiTags.traditionalCrafts),
-        description: 'Traditional handicrafts and artisan skills'
+        description: 'Authentic handicrafts, artisan workshops, and traditional skills'
       },
       {
         id: 'wildlife_conservation',
@@ -109,7 +109,7 @@ const AITaggingSystem: React.FC<AITaggingSystemProps> = ({ communityId, onTagsUp
         score: community.aiTags.wildlifeConservation,
         icon: Camera,
         color: getScoreColor(community.aiTags.wildlifeConservation),
-        description: 'Wildlife protection and conservation efforts'
+        description: 'Wildlife protection, biodiversity conservation, and nature preservation'
       }
     ];
 

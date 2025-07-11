@@ -286,14 +286,43 @@ export const communities: Community[] = [
 export const getAITagRecommendations = (community: Community) => {
   const recommendations = [];
   
-  if (community.aiTags.ecoFriendly >= 90) recommendations.push('🌿 Eco Paradise');
-  if (community.aiTags.culturalRichness >= 90) recommendations.push('🎭 Cultural Heritage');
+  if (community.aiTags.ecoFriendly >= 95) recommendations.push('🌿 Eco Paradise');
+  else if (community.aiTags.ecoFriendly >= 90) recommendations.push('🌱 Eco-Friendly');
+  
+  if (community.aiTags.culturalRichness >= 95) recommendations.push('🎭 Cultural Heritage Master');
+  else if (community.aiTags.culturalRichness >= 85) recommendations.push('🏛️ Cultural Heritage');
+  
   if (community.aiTags.adventureLevel >= 85) recommendations.push('🏔️ Adventure Hub');
-  if (community.aiTags.familyFriendly >= 85) recommendations.push('👨‍👩‍👧‍👦 Family Perfect');
-  if (community.aiTags.soloTravelerSafe >= 85) recommendations.push('🚶‍♀️ Solo Friendly');
-  if (community.aiTags.organicFarming >= 90) recommendations.push('🌾 Organic Farm');
+  if (community.aiTags.familyFriendly >= 90) recommendations.push('👨‍👩‍👧‍👦 Family Perfect');
+  else if (community.aiTags.familyFriendly >= 85) recommendations.push('👨‍👩‍👧‍👦 Family Friendly');
+  
+  if (community.aiTags.soloTravelerSafe >= 90) recommendations.push('🚶‍♀️ Solo Traveler Paradise');
+  else if (community.aiTags.soloTravelerSafe >= 85) recommendations.push('🚶‍♀️ Solo Friendly');
+  
+  if (community.aiTags.organicFarming >= 95) recommendations.push('🌾 100% Organic');
+  else if (community.aiTags.organicFarming >= 85) recommendations.push('🌾 Organic Farm');
+  
   if (community.aiTags.traditionalCrafts >= 90) recommendations.push('🎨 Craft Master');
-  if (community.aiTags.wildlifeConservation >= 85) recommendations.push('🦋 Wildlife Haven');
+  else if (community.aiTags.traditionalCrafts >= 80) recommendations.push('🎨 Traditional Crafts');
+  
+  if (community.aiTags.wildlifeConservation >= 90) recommendations.push('🦋 Wildlife Paradise');
+  else if (community.aiTags.wildlifeConservation >= 80) recommendations.push('🦋 Wildlife Haven');
+  
+  if (community.aiTags.digitalConnectivity >= 75) recommendations.push('📶 Well Connected');
+  if (community.aiTags.accessibility >= 80) recommendations.push('♿ Accessible');
+  
+  // Special combinations
+  if (community.aiTags.ecoFriendly >= 90 && community.aiTags.organicFarming >= 90) {
+    recommendations.push('🌍 Sustainable Living');
+  }
+  
+  if (community.aiTags.culturalRichness >= 85 && community.aiTags.traditionalCrafts >= 85) {
+    recommendations.push('🏺 Cultural Immersion');
+  }
+  
+  if (community.aiTags.adventureLevel >= 80 && community.aiTags.wildlifeConservation >= 80) {
+    recommendations.push('🌲 Nature Adventure');
+  }
   
   return recommendations;
 };
